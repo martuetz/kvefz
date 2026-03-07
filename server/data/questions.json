@@ -1,0 +1,770 @@
+[
+    {
+        "text": "Was ist der Unterschied zwischen Aktiven und Passiven in der Bilanz?",
+        "type": "mcq",
+        "options": [
+            "Aktiven zeigen die Mittelverwendung, Passiven die Mittelherkunft",
+            "Aktiven sind immer grösser als Passiven",
+            "Passiven zeigen das Vermögen, Aktiven die Schulden",
+            "Es gibt keinen Unterschied"
+        ],
+        "correct_answer": "Aktiven zeigen die Mittelverwendung, Passiven die Mittelherkunft",
+        "explanation": "Die Aktivseite (links) zeigt, wofür das Kapital verwendet wird (Vermögenswerte). Die Passivseite (rechts) zeigt, woher das Kapital stammt (Fremd- und Eigenkapital). Bilanzgleichung: Aktiven = Passiven.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Welche Aussage zur doppelten Buchhaltung ist korrekt?",
+        "type": "mcq",
+        "options": [
+            "Jeder Geschäftsfall wird auf mindestens zwei Konten gebucht (Soll und Haben)",
+            "Jeder Geschäftsfall wird doppelt gebucht, einmal am Anfang und einmal am Ende",
+            "Es werden immer genau zwei Buchungssätze erstellt",
+            "Die doppelte Buchhaltung ist nur für Aktiengesellschaften obligatorisch"
+        ],
+        "correct_answer": "Jeder Geschäftsfall wird auf mindestens zwei Konten gebucht (Soll und Haben)",
+        "explanation": "Bei der doppelten Buchhaltung wird jeder Geschäftsfall auf mindestens zwei Konten erfasst: eines im Soll (Mittelverwendung) und eines im Haben (Mittelherkunft). So bleibt die Bilanzgleichung immer gewahrt.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Buchungssätze",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist die korrekte Buchung beim Kauf von Büromaterial auf Rechnung?",
+        "type": "mcq",
+        "options": [
+            "Büromaterialaufwand / Kreditoren",
+            "Kasse / Büromaterialaufwand",
+            "Kreditoren / Büromaterialaufwand",
+            "Büromaterialaufwand / Kasse"
+        ],
+        "correct_answer": "Büromaterialaufwand / Kreditoren",
+        "explanation": "Beim Kauf auf Rechnung entsteht ein Aufwand (Soll) und eine Verbindlichkeit gegenüber dem Lieferanten (Kreditoren = Haben). Die Kasse wird erst bei Bezahlung berührt.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Buchungssätze",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist der Liquiditätsgrad 2 (Quick Ratio)?",
+        "type": "mcq",
+        "options": [
+            "(Flüssige Mittel + Forderungen) / kurzfristiges Fremdkapital × 100",
+            "Flüssige Mittel / kurzfristiges Fremdkapital × 100",
+            "(Umlaufvermögen) / Gesamtkapital × 100",
+            "Eigenkapital / Fremdkapital × 100"
+        ],
+        "correct_answer": "(Flüssige Mittel + Forderungen) / kurzfristiges Fremdkapital × 100",
+        "explanation": "Der Liquiditätsgrad 2 (Quick Ratio) misst, ob ein Unternehmen seine kurzfristigen Schulden mit flüssigen Mitteln und Forderungen decken kann. Sollwert: mindestens 100%.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Welche Abschreibungsmethode vermindert den Buchwert jedes Jahr um einen festen Prozentsatz?",
+        "type": "mcq",
+        "options": [
+            "Degressive Abschreibung",
+            "Lineare Abschreibung",
+            "Progressive Abschreibung",
+            "Sofortabschreibung"
+        ],
+        "correct_answer": "Degressive Abschreibung",
+        "explanation": "Bei der degressiven Methode wird ein fester Prozentsatz vom jeweiligen Buchwert abgeschrieben. Die Abschreibungsbeträge sinken jedes Jahr. Bei der linearen Methode ist der Betrag jedes Jahr gleich.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Abschreibungen",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Ein Unternehmen kauft eine Maschine für CHF 50'000. Die Nutzungsdauer beträgt 10 Jahre, linear. Wie hoch ist die jährliche Abschreibung?",
+        "type": "mcq",
+        "options": [
+            "CHF 5'000",
+            "CHF 10'000",
+            "CHF 50'000",
+            "CHF 500"
+        ],
+        "correct_answer": "CHF 5'000",
+        "explanation": "Lineare Abschreibung: Anschaffungskosten / Nutzungsdauer = CHF 50'000 / 10 Jahre = CHF 5'000 pro Jahr.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Abschreibungen",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist der Kontenrahmen KMU (Käfer)?",
+        "type": "mcq",
+        "options": [
+            "Ein standardisierter Aufbau der Konten für die Buchhaltung in der Schweiz",
+            "Ein Steuererklärungsformular",
+            "Ein Prüfungsdokument für Kaufleute",
+            "Eine Unternehmensform in der Schweiz"
+        ],
+        "correct_answer": "Ein standardisierter Aufbau der Konten für die Buchhaltung in der Schweiz",
+        "explanation": "Der Kontenrahmen KMU ist ein einheitliches Schema mit nummerierten Kontenklassen (1: Aktiven, 2: Passiven, 3: Ertrag, 4-8: Aufwand, 9: Abschluss).",
+        "topic": "Rechnungswesen",
+        "subtopic": "Buchungssätze",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was versteht man unter der Mehrwertsteuer (MWST)?",
+        "type": "mcq",
+        "options": [
+            "Eine indirekte Verbrauchssteuer, die auf den Verkauf von Waren und Dienstleistungen erhoben wird",
+            "Eine Steuer nur für Grossunternehmen",
+            "Eine direkte Einkommenssteuer",
+            "Eine Steuer, die nur im Export gilt"
+        ],
+        "correct_answer": "Eine indirekte Verbrauchssteuer, die auf den Verkauf von Waren und Dienstleistungen erhoben wird",
+        "explanation": "Die MWST ist eine indirekte Steuer, die der Endverbraucher trägt. In der Schweiz gibt es drei Sätze: Normalsatz (8.1%), reduzierter Satz (2.6%), und Sondersatz für Beherbergung (3.8%).",
+        "topic": "Rechnungswesen",
+        "subtopic": "Mehrwertsteuer",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist die Eigenkapitalrendite (ROE)?",
+        "type": "mcq",
+        "options": [
+            "Reingewinn / Eigenkapital × 100",
+            "Umsatz / Eigenkapital × 100",
+            "Eigenkapital / Gesamtkapital × 100",
+            "Reingewinn / Umsatz × 100"
+        ],
+        "correct_answer": "Reingewinn / Eigenkapital × 100",
+        "explanation": "Die Eigenkapitalrendite zeigt, wie viel Gewinn pro eingesetztem Eigenkapital erzielt wird. Sie ist ein wichtiger Indikator für die Rentabilität aus Sicht der Eigentümer.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "schwer"
+    },
+    {
+        "text": "Was gehört NICHT zum Umlaufvermögen?",
+        "type": "mcq",
+        "options": [
+            "Maschinen",
+            "Kasse",
+            "Vorräte/Waren",
+            "Debitoren (Forderungen)"
+        ],
+        "correct_answer": "Maschinen",
+        "explanation": "Maschinen gehören zum Anlagevermögen, da sie langfristig im Unternehmen genutzt werden. Umlaufvermögen umfasst kurzfristige Vermögenswerte wie Kasse, Bank, Debitoren und Vorräte.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Rückstellungen gehören zu den Passiven in der Bilanz.",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Wahr",
+        "explanation": "Rückstellungen sind Verbindlichkeiten, die in ihrer Höhe oder ihrem Eintrittszeitpunkt ungewiss sind. Sie werden auf der Passivseite unter dem Fremdkapital ausgewiesen.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was regelt das Obligationenrecht (OR) in der Schweiz?",
+        "type": "mcq",
+        "options": [
+            "Vertragsrecht, Kaufverträge, Arbeitsverträge und Gesellschaftsrecht",
+            "Nur das Strafrecht",
+            "Ausschliesslich die Steuerpflicht",
+            "Die Regelung von Bürgerrechten und Nationalität"
+        ],
+        "correct_answer": "Vertragsrecht, Kaufverträge, Arbeitsverträge und Gesellschaftsrecht",
+        "explanation": "Das OR ist Teil des Schweizerischen Zivilgesetzbuchs (ZGB) und regelt das Vertragsrecht (allg. Teil), einzelne Vertragsarten (Kauf, Miete, Arbeit etc.) und das Gesellschaftsrecht (AG, GmbH etc.).",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Welche Bedingungen müssen für einen gültigen Vertrag in der Schweiz erfüllt sein?",
+        "type": "mcq",
+        "options": [
+            "Handlungsfähigkeit, übereinstimmende Willensäusserung, erlaubter Inhalt",
+            "Nur schriftliche Form",
+            "Nur die Unterschrift beider Parteien",
+            "Registrierung beim Handelsregister"
+        ],
+        "correct_answer": "Handlungsfähigkeit, übereinstimmende Willensäusserung, erlaubter Inhalt",
+        "explanation": "Verträge erfordern: 1) Handlungsfähige Parteien (mündig + urteilsfähig), 2) Übereinstimmende gegenseitige Willensäusserung, 3) Erlaubter Vertragsinhalt (nicht rechts-/sittenwidrig). Die Form ist grundsätzlich frei (OR Art. 11).",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was muss ein Käufer bei Mängeln der gelieferten Ware tun?",
+        "type": "mcq",
+        "options": [
+            "Ware sofort prüfen und Mängel unverzüglich rügen",
+            "Bis Ende des Monats reklamieren",
+            "Nur innerhalb von 30 Tagen reklamieren",
+            "Gar nichts, der Verkäufer ist automatisch informiert"
+        ],
+        "correct_answer": "Ware sofort prüfen und Mängel unverzüglich rügen",
+        "explanation": "Gemäss OR Art. 201 muss die Ware sofort nach Empfang geprüft werden. Erkannte Mängel sind dem Verkäufer unverzüglich zu melden (Mängelrüge). Versäumt der Käufer dies, gilt die Ware als genehmigt.",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Welche Rechte hat der Käufer bei Mängeln im Kaufvertrag?",
+        "type": "mcq",
+        "options": [
+            "Wandlung (Rückgabe), Minderung (Preisreduktion) oder Ersatzlieferung",
+            "Nur Rückgabe",
+            "Nur Preisminderung",
+            "Schadenersatz ohne weitere Optionen"
+        ],
+        "correct_answer": "Wandlung (Rückgabe), Minderung (Preisreduktion) oder Ersatzlieferung",
+        "explanation": "Der Käufer hat ein Wahlrecht: Wandlung (Vertrag rückgängig machen), Minderung (tieferer Preis) oder bei Gattungsware Ersatzlieferung. Bei arglistig verschwiegenen Mängeln auch Schadenersatz.",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Wie lange ist die Verjährungsfrist für Forderungen aus dem Kauf beweglicher Sachen?",
+        "type": "mcq",
+        "options": [
+            "2 Jahre",
+            "1 Jahr",
+            "5 Jahre",
+            "10 Jahre"
+        ],
+        "correct_answer": "2 Jahre",
+        "explanation": "Gemäss OR Art. 210 verjähren Mängelrechte bei beweglichen Sachen nach 2 Jahren ab Lieferung. Die allgemeine Verjährungsfrist für Forderungen beträgt 10 Jahre (OR Art. 127).",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Die maximale Probezeit bei einem Arbeitsvertrag in der Schweiz beträgt 3 Monate.",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Wahr",
+        "explanation": "Gemäss OR Art. 335b darf die Probezeit maximal 3 Monate betragen. Wird nichts vereinbart, gilt der erste Monat als Probezeit. Während der Probezeit beträgt die Kündigungsfrist 7 Tage.",
+        "topic": "Recht",
+        "subtopic": "Arbeitsrecht",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was versteht man unter Betreibung in der Schweiz?",
+        "type": "mcq",
+        "options": [
+            "Das gesetzliche Verfahren zur Eintreibung von Geldforderungen",
+            "Die Gründung eines Unternehmens",
+            "Die Schliessung eines Unternehmens",
+            "Ein Gerichtsverfahren bei Streitigkeiten zwischen Arbeitgeber und Arbeitnehmer"
+        ],
+        "correct_answer": "Das gesetzliche Verfahren zur Eintreibung von Geldforderungen",
+        "explanation": "Das Betreibungsverfahren (SchKG) dient der Zwangsvollstreckung von Geldforderungen. Schritte: Betreibungsbegehren → Zahlungsbefehl → Rechtsvorschlag möglich → Pfändung oder Konkurs.",
+        "topic": "Recht",
+        "subtopic": "Betreibung & Konkurs",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist ein Rechtsvorschlag?",
+        "type": "mcq",
+        "options": [
+            "Der Widerspruch des Schuldners gegen einen Zahlungsbefehl innerhalb von 10 Tagen",
+            "Ein Antrag auf Stundung",
+            "Ein Gerichtsurteil",
+            "Eine Beschwerde beim Bundesgericht"
+        ],
+        "correct_answer": "Der Widerspruch des Schuldners gegen einen Zahlungsbefehl innerhalb von 10 Tagen",
+        "explanation": "Der Rechtsvorschlag (SchKG Art. 74) stoppt die Betreibung. Der Schuldner muss ihn innerhalb von 10 Tagen nach Zustellung des Zahlungsbefehls erheben. Der Gläubiger muss dann die Forderung gerichtlich durchsetzen.",
+        "topic": "Recht",
+        "subtopic": "Betreibung & Konkurs",
+        "difficulty": "schwer"
+    },
+    {
+        "text": "Was ist das gesetzliche Mindestkapital einer GmbH in der Schweiz?",
+        "type": "mcq",
+        "options": [
+            "CHF 20'000",
+            "CHF 50'000",
+            "CHF 100'000",
+            "CHF 10'000"
+        ],
+        "correct_answer": "CHF 20'000",
+        "explanation": "Eine GmbH erfordert ein Mindestkapital von CHF 20'000 (vollständig liberiert). Eine AG benötigt mindestens CHF 100'000 Aktienkapital (davon 20% oder min. CHF 50'000 einbezahlt).",
+        "topic": "Recht",
+        "subtopic": "Gesellschaftsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was sind Stakeholder eines Unternehmens?",
+        "type": "mcq",
+        "options": [
+            "Alle Personen und Gruppen, die ein Interesse am Unternehmen haben",
+            "Nur die Aktionäre",
+            "Nur die Mitarbeiter",
+            "Nur die Kunden"
+        ],
+        "correct_answer": "Alle Personen und Gruppen, die ein Interesse am Unternehmen haben",
+        "explanation": "Stakeholder (Anspruchsgruppen) umfassen: Eigentümer, Mitarbeiter, Kunden, Lieferanten, Banken, Staat, Gesellschaft. Sie haben unterschiedliche Interessen, die das Unternehmen berücksichtigen muss.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Unternehmensformen",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist eine SWOT-Analyse?",
+        "type": "mcq",
+        "options": [
+            "Ein strategisches Planungsinstrument zur Analyse von Stärken, Schwächen, Chancen und Risiken",
+            "Ein Finanzierungsinstrument",
+            "Ein Qualitätsmanagement-Tool",
+            "Eine Art der Buchführung"
+        ],
+        "correct_answer": "Ein strategisches Planungsinstrument zur Analyse von Stärken, Schwächen, Chancen und Risiken",
+        "explanation": "SWOT: Strengths (intern), Weaknesses (intern), Opportunities (extern), Threats (extern). Damit werden interne Fähigkeiten und externe Umweltfaktoren systematisch gegenübergestellt.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Strategie",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Wie berechnet sich der Break-Even-Point (Gewinnschwelle)?",
+        "type": "mcq",
+        "options": [
+            "Fixkosten / (Verkaufspreis pro Stück - variable Kosten pro Stück)",
+            "Umsatz / Gewinn",
+            "Gesamtkosten / Anzahl Mitarbeiter",
+            "Variable Kosten / Fixkosten"
+        ],
+        "correct_answer": "Fixkosten / (Verkaufspreis pro Stück - variable Kosten pro Stück)",
+        "explanation": "Am Break-Even-Point sind Gesamterlöse = Gesamtkosten (Gewinn = 0). Die Formel zeigt, wie viele Einheiten verkauft werden müssen: BEP = FK / (p - kv). Der Nenner ist der Deckungsbeitrag pro Stück.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Finanzierung",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist der Unterschied zwischen einer Linien- und einer Matrixorganisation?",
+        "type": "mcq",
+        "options": [
+            "Linienorganisation: klare Hierarchie mit einem Vorgesetzten; Matrix: Mitarbeiter haben zwei Vorgesetzte",
+            "Linienorganisation ist moderner als Matrix",
+            "Es gibt keinen Unterschied",
+            "Matrixorganisation hat nur eine Ebene"
+        ],
+        "correct_answer": "Linienorganisation: klare Hierarchie mit einem Vorgesetzten; Matrix: Mitarbeiter haben zwei Vorgesetzte",
+        "explanation": "In der Linienorganisation hat jeder genau einen direkten Vorgesetzten (Einliniensystem). In der Matrixorganisation werden funktionale und divisionale Strukturen kombiniert – Mitarbeiter berichten an zwei Vorgesetzte.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Organisation",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist ein Organigramm?",
+        "type": "mcq",
+        "options": [
+            "Eine grafische Darstellung der Aufbauorganisation eines Unternehmens",
+            "Ein Finanzierungsplan",
+            "Ein Marketinginstrument",
+            "Ein Buchhaltungsdokument"
+        ],
+        "correct_answer": "Eine grafische Darstellung der Aufbauorganisation eines Unternehmens",
+        "explanation": "Ein Organigramm zeigt die hierarchische Struktur, Abteilungen, Stellen und Unterstellungsverhältnisse eines Unternehmens. Es ist ein wichtiges Instrument der Aufbauorganisation.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Organisation",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was sind die 4 P des Marketing-Mix?",
+        "type": "mcq",
+        "options": [
+            "Product, Price, Place, Promotion",
+            "Product, People, Process, Performance",
+            "Price, Plan, Profit, Production",
+            "Promotion, Position, Practice, Personnel"
+        ],
+        "correct_answer": "Product, Price, Place, Promotion",
+        "explanation": "Die 4P: Product (Produktpolitik), Price (Preispolitik), Place (Distributionspolitik), Promotion (Kommunikationspolitik). Diese vier Instrumente müssen aufeinander abgestimmt werden.",
+        "topic": "Marketing",
+        "subtopic": "Marketing-Mix (4P)",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was bedeutet USP im Marketing?",
+        "type": "mcq",
+        "options": [
+            "Unique Selling Proposition – das Alleinstellungsmerkmal eines Produkts",
+            "Universal Sales Program",
+            "Unified Service Platform",
+            "User Satisfaction Point"
+        ],
+        "correct_answer": "Unique Selling Proposition – das Alleinstellungsmerkmal eines Produkts",
+        "explanation": "Die USP ist das einzigartige Verkaufsversprechen, das ein Produkt oder eine Dienstleistung von der Konkurrenz unterscheidet. Sie beantwortet die Frage: 'Warum soll der Kunde bei uns kaufen?'",
+        "topic": "Marketing",
+        "subtopic": "Marketing-Mix (4P)",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist das AIDA-Modell?",
+        "type": "mcq",
+        "options": [
+            "Ein Werbewirkungsmodell: Attention, Interest, Desire, Action",
+            "Eine Organisationsform",
+            "Ein Finanzierungsmodell",
+            "Eine Buchhaltungsmethode"
+        ],
+        "correct_answer": "Ein Werbewirkungsmodell: Attention, Interest, Desire, Action",
+        "explanation": "AIDA beschreibt die Stufen der Werbewirkung: 1) Aufmerksamkeit wecken, 2) Interesse erzeugen, 3) Wunsch auslösen, 4) Handlung bewirken (Kauf). Es wird in der Werbung und im Verkauf eingesetzt.",
+        "topic": "Marketing",
+        "subtopic": "Kommunikation",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was versteht man unter Marktsegmentierung?",
+        "type": "mcq",
+        "options": [
+            "Die Aufteilung des Gesamtmarktes in homogene Teilmärkte nach bestimmten Kriterien",
+            "Die Fusion zweier Märkte",
+            "Die Monopolbildung in einem Markt",
+            "Die Globalisierung eines Produkts"
+        ],
+        "correct_answer": "Die Aufteilung des Gesamtmarktes in homogene Teilmärkte nach bestimmten Kriterien",
+        "explanation": "Segmentierungskriterien: geografisch (Region), demografisch (Alter, Geschlecht), psychografisch (Lebensstil, Werte), verhaltensorientiert (Kaufverhalten). Ziel: massgeschneiderte Marketingmassnahmen für Zielgruppen.",
+        "topic": "Marketing",
+        "subtopic": "Marktforschung",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist der Unterschied zwischen direktem und indirektem Absatzweg?",
+        "type": "mcq",
+        "options": [
+            "Direkt: Verkauf ohne Zwischenhändler; Indirekt: Einschaltung von Gross-/Einzelhandel",
+            "Direkt ist teurer als indirekt",
+            "Es gibt keinen Unterschied",
+            "Indirekt bedeutet Verkauf über das Internet"
+        ],
+        "correct_answer": "Direkt: Verkauf ohne Zwischenhändler; Indirekt: Einschaltung von Gross-/Einzelhandel",
+        "explanation": "Direkter Absatz: Hersteller verkauft direkt an Endkunden (z.B. Fabrikverkauf, Webshop). Indirekter Absatz: zwischengeschaltete Handelsstufen (Grosshandel, Detailhandel) übernehmen den Vertrieb.",
+        "topic": "Marketing",
+        "subtopic": "Marketing-Mix (4P)",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist die Preiselastizität der Nachfrage?",
+        "type": "mcq",
+        "options": [
+            "Sie misst, wie stark die Nachfrage auf eine Preisänderung reagiert",
+            "Sie zeigt den Mindestpreis eines Produkts",
+            "Sie ist ein Synonym für den Break-Even-Point",
+            "Sie beschreibt die Produktionskosten"
+        ],
+        "correct_answer": "Sie misst, wie stark die Nachfrage auf eine Preisänderung reagiert",
+        "explanation": "Preiselastizität = prozentuale Mengenänderung / prozentuale Preisänderung. Elastisch (>1): Nachfrage reagiert stark auf Preisänderungen (Luxusgüter). Unelastisch (<1): geringe Reaktion (Grundbedürfnisse).",
+        "topic": "Marketing",
+        "subtopic": "Preispolitik",
+        "difficulty": "schwer"
+    },
+    {
+        "text": "Was bedeutet Just-in-Time (JIT) in der Logistik?",
+        "type": "mcq",
+        "options": [
+            "Materialien werden genau dann geliefert, wenn sie benötigt werden – minimale Lagerhaltung",
+            "Waren werden so schnell wie möglich produziert",
+            "Alle Waren werden in einem grossen Zentrallager gelagert",
+            "Die Produktion läuft 24 Stunden am Tag"
+        ],
+        "correct_answer": "Materialien werden genau dann geliefert, wenn sie benötigt werden – minimale Lagerhaltung",
+        "explanation": "JIT-Prinzip: Bestellungen und Lieferungen werden zeitlich so abgestimmt, dass keine oder minimale Lagerbestände nötig sind. Vorteile: geringe Lagerkosten. Nachteile: hohe Abhängigkeit von Lieferanten, Lieferausfallrisiko.",
+        "topic": "Logistik",
+        "subtopic": "Beschaffung",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist die ABC-Analyse in der Materialwirtschaft?",
+        "type": "mcq",
+        "options": [
+            "Eine Methode zur Klassifizierung von Gütern nach ihrem Wertanteil am Gesamtbestand",
+            "Eine Buchführungsmethode",
+            "Ein Marketinginstrument",
+            "Eine Art der Personalbeurteilung"
+        ],
+        "correct_answer": "Eine Methode zur Klassifizierung von Gütern nach ihrem Wertanteil am Gesamtbestand",
+        "explanation": "A-Güter: hoher Wertanteil (70-80%), geringe Menge (10-20%). B-Güter: mittlerer Wertanteil (15-20%). C-Güter: geringer Wertanteil (5-10%), grosse Menge (60-70%). Daraus ergeben sich unterschiedliche Beschaffungsstrategien.",
+        "topic": "Logistik",
+        "subtopic": "Materialwirtschaft",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was sind Incoterms?",
+        "type": "mcq",
+        "options": [
+            "Internationale Handelsklauseln, die Rechte und Pflichten bei Warenlieferungen regeln",
+            "Internationale Steuersätze",
+            "Ein System für internationale Banküberweisungen",
+            "Zollgebühren der Europäischen Union"
+        ],
+        "correct_answer": "Internationale Handelsklauseln, die Rechte und Pflichten bei Warenlieferungen regeln",
+        "explanation": "Incoterms (International Commercial Terms) der ICC regeln,wer im internationalen Handel Kosten und Risiken des Transports trägt. Beispiele: EXW (ab Werk), FOB (frei an Bord), CIF (Kosten, Versicherung, Fracht), DDP (geliefert verzollt).",
+        "topic": "Logistik",
+        "subtopic": "Transport",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Wie berechnet sich die Lagerumschlagshäufigkeit?",
+        "type": "mcq",
+        "options": [
+            "Wareneinsatz (zu Einstandspreisen) / durchschnittlicher Lagerbestand",
+            "Umsatz / Lagerkosten",
+            "Lagerbestand / Umsatz",
+            "Bestellmenge × Bestellhäufigkeit"
+        ],
+        "correct_answer": "Wareneinsatz (zu Einstandspreisen) / durchschnittlicher Lagerbestand",
+        "explanation": "Die Lagerumschlagshäufigkeit zeigt, wie oft das Lager pro Jahr umgeschlagen wird. Hohe Umschlagshäufigkeit = geringe Kapitalbindung. Die durchschnittliche Lagerdauer = 360 / Umschlagshäufigkeit.",
+        "topic": "Logistik",
+        "subtopic": "Lagerhaltung",
+        "difficulty": "schwer"
+    },
+    {
+        "text": "Was ist ein ERP-System?",
+        "type": "mcq",
+        "options": [
+            "Enterprise Resource Planning – integrierte Software zur Steuerung aller Unternehmensprozesse",
+            "Ein Lagerverwaltungsprogramm",
+            "Ein E-Mail-Verwaltungssystem",
+            "Ein Personalrekrutierungstool"
+        ],
+        "correct_answer": "Enterprise Resource Planning – integrierte Software zur Steuerung aller Unternehmensprozesse",
+        "explanation": "ERP-Systeme (z.B. SAP, Microsoft Dynamics) integrieren alle Geschäftsprozesse: Finanzen, Einkauf, Produktion, Verkauf, Personalwesen, Logistik in einer zentralen Datenbank.",
+        "topic": "Logistik",
+        "subtopic": "Materialwirtschaft",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was gehört zu den Aufgaben einer kaufmännischen Angestellten?",
+        "type": "mcq",
+        "options": [
+            "Korrespondenz, Buchhaltung, Kundenbetreuung, Datenverwaltung",
+            "Nur Telefondienst",
+            "Nur Buchhaltung",
+            "Nur Postversand"
+        ],
+        "correct_answer": "Korrespondenz, Buchhaltung, Kundenbetreuung, Datenverwaltung",
+        "explanation": "Kaufmännische Angestellte arbeiten in verschiedenen Bereichen: Geschäftskorrespondenz (Briefe, E-Mails), Rechnungswesen, Kundenkontakt, Telefondienst, Terminplanung, Dokumentenmanagement und IT-gestützte Arbeitsprozesse.",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Büroorganisation",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist ein Protokoll im geschäftlichen Kontext?",
+        "type": "mcq",
+        "options": [
+            "Eine schriftliche Aufzeichnung der Inhalte und Beschlüsse einer Sitzung",
+            "Ein Vertrag zwischen zwei Parteien",
+            "Ein Finanzierungsplan",
+            "Eine Werbemassnahme"
+        ],
+        "correct_answer": "Eine schriftliche Aufzeichnung der Inhalte und Beschlüsse einer Sitzung",
+        "explanation": "Protokollarten: Verlaufsprotokoll (chronologisch), Beschlussprotokoll (nur Ergebnisse), Kurzprotokoll. Inhalt: Datum, Teilnehmer, Traktanden, Beschlüsse, nächste Schritte, Unterschrift.",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Geschäftskorrespondenz",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist das BIP (Bruttoinlandprodukt)?",
+        "type": "mcq",
+        "options": [
+            "Der Gesamtwert aller Waren und Dienstleistungen, die innerhalb eines Landes in einem Jahr produziert werden",
+            "Der gesamte Exportwert eines Landes",
+            "Die Summe aller Steuereinnahmen",
+            "Der Gewinn aller Unternehmen in einem Land"
+        ],
+        "correct_answer": "Der Gesamtwert aller Waren und Dienstleistungen, die innerhalb eines Landes in einem Jahr produziert werden",
+        "explanation": "Das BIP ist der wichtigste Indikator für die wirtschaftliche Leistung eines Landes. Es umfasst alle in einer Periode produzierten Güter und Dienstleistungen (Inlandskonzept). Das BNE (Bruttonationaleinkommen) erfasst dagegen die von Inländern erbrachte Leistung.",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist Inflation?",
+        "type": "mcq",
+        "options": [
+            "Ein allgemeiner, anhaltender Anstieg des Preisniveaus",
+            "Ein Rückgang der Preise",
+            "Ein Anstieg der Löhne",
+            "Ein Sinken des BIP"
+        ],
+        "correct_answer": "Ein allgemeiner, anhaltender Anstieg des Preisniveaus",
+        "explanation": "Inflation = Geldentwertung: Für die gleiche Geldmenge kann man weniger kaufen. Gemessen wird sie am Landesindex der Konsumentenpreise (LIK). Deflation ist das Gegenteil (sinkendes Preisniveau).",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Welche der folgenden ist eine direkte Steuer?",
+        "type": "mcq",
+        "options": [
+            "Einkommenssteuer",
+            "Mehrwertsteuer",
+            "Tabaksteuer",
+            "Mineralölsteuer"
+        ],
+        "correct_answer": "Einkommenssteuer",
+        "explanation": "Direkte Steuern werden direkt vom Steuerpflichtigen erhoben (Einkommens-, Vermögens-, Gewinnsteuer). Indirekte Steuern werden über den Preis von Waren erhoben (MWST, Tabak-, Alkoholsteuer).",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist der Unterschied zwischen Bruttolohn und Nettolohn?",
+        "type": "mcq",
+        "options": [
+            "Bruttolohn = Gesamtlohn; Nettolohn = Bruttolohn minus Sozialabzüge",
+            "Bruttolohn ist der ausbezahlte Lohn",
+            "Nettolohn ist immer höher als Bruttolohn",
+            "Es gibt keinen Unterschied"
+        ],
+        "correct_answer": "Bruttolohn = Gesamtlohn; Nettolohn = Bruttolohn minus Sozialabzüge",
+        "explanation": "Vom Bruttolohn werden abgezogen: AHV/IV/EO (5.3%), ALV (1.1%), NBU, BVG (Pensionskasse). Der verbleibende Betrag ist der Nettolohn (= auf das Konto ausbezahlter Betrag).",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Welches Sozialversicherungssystem in der Schweiz basiert auf dem Drei-Säulen-Prinzip?",
+        "type": "mcq",
+        "options": [
+            "Die Altersvorsorge (AHV, BVG, private Vorsorge)",
+            "Die Krankenversicherung",
+            "Die Unfallversicherung",
+            "Die Arbeitslosenversicherung"
+        ],
+        "correct_answer": "Die Altersvorsorge (AHV, BVG, private Vorsorge)",
+        "explanation": "1. Säule: AHV/IV (staatliche Vorsorge, Existenzsicherung). 2. Säule: BVG/Pensionskasse (berufliche Vorsorge, gewohnter Lebensstandard). 3. Säule: Private Vorsorge (Säule 3a steuerlich begünstigt).",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Die Aktivseite der Bilanz zeigt die Mittelherkunft.",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Falsch",
+        "explanation": "Die Aktivseite zeigt die Mittelverwendung (Vermögen). Die Passivseite zeigt die Mittelherkunft (Fremd- und Eigenkapital).",
+        "topic": "Rechnungswesen",
+        "subtopic": "Bilanzanalyse",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Ein Kredit an einen Kunden erhöht die Forderungen (Debitoren).",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Wahr",
+        "explanation": "Wenn ein Unternehmen Waren auf Rechnung (Kredit) verkauft, entsteht eine Forderung gegenüber dem Kunden. Diese wird auf dem Konto Debitoren (Aktivkonto) erfasst.",
+        "topic": "Rechnungswesen",
+        "subtopic": "Buchungssätze",
+        "difficulty": "leicht"
+    },
+    {
+        "text": "Was ist der Deckungsbeitrag?",
+        "type": "mcq",
+        "options": [
+            "Erlös minus variable Kosten",
+            "Erlös minus Fixkosten",
+            "Gewinn minus Steuern",
+            "Fixkosten minus variable Kosten"
+        ],
+        "correct_answer": "Erlös minus variable Kosten",
+        "explanation": "Der Deckungsbeitrag zeigt, wie viel nach Abzug der variablen Kosten zur Deckung der Fixkosten und zur Gewinnerzielung übrig bleibt. DB = Erlös - variable Kosten.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Finanzierung",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Ein Einzelunternehmer haftet nur mit dem Geschäftsvermögen.",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Falsch",
+        "explanation": "Ein Einzelunternehmer haftet unbeschränkt mit seinem gesamten Vermögen (Geschäfts- und Privatvermögen). Im Gegensatz dazu ist die Haftung bei GmbH und AG auf das Gesellschaftsvermögen beschränkt.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Unternehmensformen",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was sind die Pflichten des Arbeitgebers gemäss Schweizer Arbeitsrecht?",
+        "type": "mcq",
+        "options": [
+            "Lohnzahlung, Fürsorgepflicht, Zeugnis ausstellen, Gleichbehandlung",
+            "Nur Lohnzahlung",
+            "Nur Gewinnbeteiligung",
+            "Freiwillige Bonuszahlung"
+        ],
+        "correct_answer": "Lohnzahlung, Fürsorgepflicht, Zeugnis ausstellen, Gleichbehandlung",
+        "explanation": "Arbeitgeberpflichten (OR Art. 319 ff.): Lohnzahlung, Persönlichkeitsschutz, Arbeitssicherheit, Freizeit/Ferien gewähren, Arbeitszeugnis ausstellen, Gleichbehandlung (Gleichstellungsgesetz).",
+        "topic": "Recht",
+        "subtopic": "Arbeitsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Wie lange ist der gesetzliche Ferienanspruch für Arbeitnehmer unter 20 Jahren in der Schweiz?",
+        "type": "mcq",
+        "options": [
+            "5 Wochen",
+            "4 Wochen",
+            "3 Wochen",
+            "6 Wochen"
+        ],
+        "correct_answer": "5 Wochen",
+        "explanation": "Jugendliche bis 20 Jahre: 5 Wochen Ferien. Ab 20 Jahren: mindestens 4 Wochen (OR Art. 329a). Viele GAV und Arbeitsverträge gewähren mehr.",
+        "topic": "Recht",
+        "subtopic": "Arbeitsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was versteht man unter einem Konjunkturzyklus?",
+        "type": "mcq",
+        "options": [
+            "Periodische Schwankungen der wirtschaftlichen Aktivität: Aufschwung, Boom, Abschwung, Rezession",
+            "Die jährliche Steuererklärung",
+            "Ein Synonym für Inflation",
+            "Die Produktionsplanung eines Unternehmens"
+        ],
+        "correct_answer": "Periodische Schwankungen der wirtschaftlichen Aktivität: Aufschwung, Boom, Abschwung, Rezession",
+        "explanation": "Der Konjunkturzyklus umfasst: 1) Erholung/Aufschwung (wachsendes BIP), 2) Hochkonjunktur/Boom (Vollbeschäftigung), 3) Abschwung/Rezession (sinkendes BIP), 4) Depression (Tiefpunkt). Indikatoren: BIP, Arbeitslosigkeit, Inflation.",
+        "topic": "Kaufmannswissen",
+        "subtopic": "Volkswirtschaft",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Der Käufer muss bei offenen Mängeln die Ware innerhalb von 30 Tagen rügen.",
+        "type": "truefalse",
+        "options": [
+            "Wahr",
+            "Falsch"
+        ],
+        "correct_answer": "Falsch",
+        "explanation": "Offene Mängel müssen unverzüglich (sofort bei Entdeckung) gerügt werden, nicht erst nach 30 Tagen. Bei versteckten Mängeln muss die Rüge sofort nach Entdeckung erfolgen (OR Art. 201).",
+        "topic": "Recht",
+        "subtopic": "Vertragsrecht",
+        "difficulty": "mittel"
+    },
+    {
+        "text": "Was ist der Unterschied zwischen Fixkosten und variablen Kosten?",
+        "type": "mcq",
+        "options": [
+            "Fixkosten bleiben unverändert bei Produktionsänderung, variable Kosten ändern sich proportional",
+            "Fixkosten ändern sich jedes Jahr, variable Kosten bleiben gleich",
+            "Es gibt keinen Unterschied",
+            "Variable Kosten sind immer höher als Fixkosten"
+        ],
+        "correct_answer": "Fixkosten bleiben unverändert bei Produktionsänderung, variable Kosten ändern sich proportional",
+        "explanation": "Fixkosten: Miete, Versicherung, Löhne (fallen unabhängig von der Produktion an). Variable Kosten: Materialkosten, Energiekosten (steigen/sinken mit der Produktionsmenge). Gesamtkosten = Fix + Variable.",
+        "topic": "Betriebswirtschaft",
+        "subtopic": "Finanzierung",
+        "difficulty": "leicht"
+    }
+]

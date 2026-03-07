@@ -1,0 +1,237 @@
+# EFZ-Prüfungsvorbereitung – Implementation Plan
+
+A full-stack PWA for Swiss commercial apprenticeship (Kaufleute EFZ) exam preparation, featuring quizzes, timed exams, flashcards, progress tracking, and admin tools.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Scope & Delivery Strategy**: This is a large application. I'll build a fully functional MVP with all core features, but some content (1000+ questions) will be represented by a solid seed dataset of ~250 representative questions with the infrastructure to easily add more. The architecture supports all requested features from day one.
+
+> [!WARNING]
+> **MongoDB**: You'll need a MongoDB Atlas free-tier connection string. I'll use a `.env` file for configuration. Do you already have a MongoDB Atlas cluster, or should the app include instructions for creating one?
+
+> [!IMPORTANT]
+> **Stripe**: Requires a Stripe account + API keys. I'll wire up the full payment flow but it will use test keys. Do you have Stripe keys, or should I include placeholder setup?
+
+## Architecture Overview
+
+```mermaid
+graph TB
+    subgraph Frontend["Frontend (Vite + React)"]
+        A[React SPA] --> B[React Router]
+        B --> C[Auth Pages]
+        B --> D[Dashboard]
+        B --> E[Quiz/Exam/Flashcards]
+        B --> F[Progress Tracker]
+        B --> G[Admin Panel]
+        B --> H[Tips Section]
+    end
+    subgraph Backend["Backend (Express + Node.js)"]
+        I[Auth API] --> J[JWT + bcrypt]
+        K[Questions API] --> L[CRUD + filtering]
+        M[Sessions API] --> N[Quiz/Exam logic]
+        O[Progress API] --> P[Stats aggregation]
+        Q[Payment API] --> R[Stripe]
+    end
+    Frontend -->|REST API| Backend
+    Backend --> S[(MongoDB Atlas)]
+```
+
+**Stack**: Vite + React 18 (frontend), Express 5 (backend), MongoDB + Mongoose, JWT auth, Stripe, Workbox PWA.
+
+---
+
+## Proposed Changes
+
+### Project Structure
+
+```
+KV-Efz/
+├── client/                    # React frontend (Vite)
+│   ├── public/
+│   │   ├── manifest.json
+│   │   ├── sw.js
+│   │   └── icons/
+│   ├── src/
+│   │   ├── main.jsx
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   ├── api/               # API client helpers
+│   │   ├── components/        # Reusable UI components
+│   │   ├── pages/             # Route pages
+│   │   ├── context/           # Auth & theme context
+│   │   └── hooks/             # Custom hooks
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+├── server/                    # Express backend
+│   ├── models/                # Mongoose schemas
+│   ├── routes/                # API routes
+│   ├── middleware/             # Auth, admin middleware
+│   ├── data/                  # Seed data JSON files
+│   ├── seed.js                # Database seeder
+│   ├── server.js              # Main entry
+│   └── package.json
+├── .env.example
+└── README.md
+```
+
+---
+
+### Phase 1 – Backend
+
+#### [NEW] [server.js](file:///Users/mutz/Documents/14%20-%20Vibecoding/KV-Efz/server/server.js)
+Express app entry point: CORS, JSON parsing, route mounting, MongoDB connection via Mongoose.
+
+#### [NEW] Models: `User.js`, `Question.js`, `Session.js`, `FlashcardDeck.js`
+- **User**: email, passwordHash, name, role (user/admin), isPremium, streak, lastActive, googleId
+- **Question**: text, type (mcq/truefalse/fillblank), options[], correctAnswer, explanation, topic, subtopic, difficulty
+- **Session**: userId, type (quiz/exam), questions[], answers[], score, duration, completedAt
+- **FlashcardDeck**: topic, cards[{front, back}]
+
+#### [NEW] Routes: `auth.js`, `questions.js`, `sessions.js`, `progress.js`, `payment.js`
+- **Auth**: POST `/register`, `/login`, `/google`, GET `/me`
+- **Questions**: Full CRUD (admin-only for write), GET with filters (topic, difficulty, type)
+- **Sessions**: POST create session, PUT submit answers, GET user sessions
+- **Progress**: GET stats (avg score, streak, topic mastery, history)
+- **Payment**: POST create Stripe checkout, webhook for payment confirmation
+
+#### [NEW] Middleware: `auth.js`, `admin.js`
+JWT verification + admin role check.
+
+#### [NEW] Seed data: `questions.json`, `flashcards.json`
+~250 realistic German MCQ/TF/fill-blank questions across 6 topics + flashcard decks.
+
+---
+
+### Phase 2 – Frontend Foundation
+
+#### [NEW] [index.css](file:///Users/mutz/Documents/14%20-%20Vibecoding/KV-Efz/client/src/index.css)
+Complete design system with CSS custom properties:
+- Dark/light mode via `[data-theme]`
+- Swiss-inspired color palette (reds, clean whites, professional blues)
+- Responsive breakpoints, smooth animations
+- Glass morphism cards, gradient accents
+
+#### [NEW] [App.jsx](file:///Users/mutz/Documents/14%20-%20Vibecoding/KV-Efz/client/src/App.jsx)
+React Router setup with protected routes, auth context, theme provider.
+
+#### [NEW] Context: `AuthContext.jsx`, `ThemeContext.jsx`
+- Auth: JWT token management, user state, login/logout/register methods
+- Theme: dark/light mode toggle with localStorage persistence
+
+---
+
+### Phase 3 – Frontend Pages
+
+#### [NEW] Auth: `LoginPage.jsx`, `RegisterPage.jsx`
+Clean login/register forms with validation, Google OAuth button.
+
+#### [NEW] `DashboardPage.jsx`
+- Stats cards: tests completed, avg score, current streak, weak areas
+- Recent activity list
+- Quick-start buttons for quiz/exam/flashcards
+- Daily streak indicator with flame animation
+
+#### [NEW] `QuizPage.jsx`
+- Topic/difficulty selector → generates quiz from API
+- Question-by-question flow with progress bar
+- Instant feedback with explanations
+- Results summary with score breakdown
+
+#### [NEW] `ExamPage.jsx`
+- Timed simulation (90-120 min configurable)
+- 50-80 questions, sequential or jump-to navigation
+- Countdown timer with warnings
+- Swiss grading (1-6 scale, pass = 4.0+)
+- Full results with review mode
+
+#### [NEW] `FlashcardsPage.jsx`
+- Deck selection by topic
+- Flip animation (front = term, back = definition)
+- Swipe/button navigation, "know it" / "study more" sorting
+- Progress per deck
+
+#### [NEW] `TopicsPage.jsx`
+Breakdown of official EFZ QV topics with mastery indicators and deep-links to practice.
+
+#### [NEW] `ProgressPage.jsx`
+- Line chart: scores over time (Chart.js)
+- Topic heatmap: red-yellow-green mastery grid
+- Stats table with filters
+
+#### [NEW] `TipsPage.jsx`
+Exam strategies, time management tips, common pitfalls. Embedded video links, downloadable PDF placeholders.
+
+#### [NEW] `AdminPage.jsx`
+- Question list with search/filter
+- Create/edit question form (type, topic, options, explanation)
+- Bulk import from JSON
+- Protected by admin role
+
+#### [NEW] `PremiumPage.jsx`
+Paywall with feature comparison, Stripe checkout button.
+
+---
+
+### Phase 4 – Shared Components
+
+#### [NEW] Components
+- `Navbar.jsx` – responsive nav with mobile hamburger, auth state, theme toggle
+- `QuestionCard.jsx` – renders any question type with answer selection
+- `Timer.jsx` – countdown with visual urgency states
+- `StatsCard.jsx` – animated stat display
+- `Chart.jsx` – Chart.js wrapper for progress charts
+- `TopicHeatmap.jsx` – grid view of topic mastery
+- `FlashCard.jsx` – flip card component
+- `ProtectedRoute.jsx` – auth guard
+- `LoadingSpinner.jsx`, `Modal.jsx`, `Toast.jsx`
+
+---
+
+### Phase 5 – PWA & Polish
+
+#### [NEW] `manifest.json`
+PWA manifest with app name, icons, theme color, display: standalone.
+
+#### [NEW] `sw.js`
+Service worker: cache-first for assets, network-first for API, offline fallback page.
+
+#### Performance
+- Code splitting via React.lazy
+- Image optimization
+- Minimal dependencies (no heavy UI libraries)
+
+---
+
+### Phase 6 – Deployment Config
+
+#### [NEW] `vercel.json` or `netlify.toml`
+Frontend deployment config with SPA fallback.
+
+#### [NEW] `README.md`
+Full setup instructions: MongoDB Atlas, Stripe, env vars, local dev, deployment.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+1. **Build check**: `cd client && npm run build` must succeed with no errors
+2. **Server start check**: `cd server && node server.js` must start without crashing (with .env placeholder)
+
+### Manual Verification (Browser)
+1. **Start dev servers**: Run `cd server && npm run dev` and `cd client && npm run dev`
+2. **Registration flow**: Navigate to `/register`, create account, verify redirect to dashboard
+3. **Quiz flow**: Start a quiz, answer questions, see results with explanations
+4. **Exam flow**: Start timed exam, verify timer counts down, submit and see Swiss grade
+5. **Flashcards**: Browse decks, flip cards, navigate between cards
+6. **Dashboard**: Verify stats update after completing a quiz
+7. **Progress page**: Verify charts render with data
+8. **Dark mode**: Toggle theme, verify all pages render correctly
+9. **Admin**: Login as admin, create/edit/delete a question
+10. **Responsive**: Resize to mobile width, verify hamburger menu and layout
+11. **PWA**: Check manifest loads in DevTools → Application tab
+
+> [!TIP]
+> Since this is a greenfield project, I'll run the build and start the dev server in the browser to verify the core flows work end-to-end after implementation.
