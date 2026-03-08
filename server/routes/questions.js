@@ -1,32 +1,51 @@
 import { Router } from 'express';
-import { supabaseAdmin, isDemo, demoStore } from '../server.js';
+import { db } from '../server.js';
 import { authMiddleware, adminMiddleware } from '../middleware/auth.js';
 
 const router = Router();
+
+// Helper to format question from DB
+function formatQuestion(q) {
+    if (!q) return null;
+    return {
+        ...q,
+        options: typeof q.options === 'string' ? JSON.parse(q.options) : q.options,
+        is_premium: Boolean(q.is_premium)
+    };
+}
 
 // GET /api/questions - list with filters
 router.get('/', async (req, res) => {
     try {
         const { topic, difficulty, type, limit = 50, offset = 0 } = req.query;
 
-        if (isDemo) {
-            let questions = [...demoStore.questions];
-            if (topic) questions = questions.filter(q => q.topic === topic);
-            if (difficulty) questions = questions.filter(q => q.difficulty === difficulty);
-            if (type) questions = questions.filter(q => q.type === type);
-            const total = questions.length;
-            questions = questions.slice(Number(offset), Number(offset) + Number(limit));
-            return res.json({ questions, total });
+        let sql = 'SELECT * FROM questions WHERE 1=1';
+        const args = [];
+
+        if (topic) {
+            sql += ' AND topic = ?';
+            args.push(topic);
+        }
+        if (difficulty) {
+            sql += ' AND difficulty = ?';
+            args.push(difficulty);
+        }
+        if (type) {
+            sql += ' AND type = ?';
+            args.push(type);
         }
 
-        let query = supabaseAdmin.from('questions').select('*', { count: 'exact' });
-        if (topic) query = query.eq('topic', topic);
-        if (difficulty) query = query.eq('difficulty', difficulty);
-        if (type) query = query.eq('type', type);
-        query = query.range(Number(offset), Number(offset) + Number(limit) - 1).order('created_at', { ascending: false });
-        const { data, error, count } = await query;
-        if (error) throw error;
-        res.json({ questions: data, total: count });
+        const countSql = sql.replace('SELECT *', 'SELECT COUNT(*) as total');
+        const countRes = await db.execute({ sql: countSql, args });
+        const total = countRes.rows[0].total;
+
+        sql += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
+        args.push(Number(limit), Number(offset));
+
+        const result = await db.execute({ sql, args });
+        const questions = result.rows.map(formatQuestion);
+
+        res.json({ questions, total });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -37,21 +56,25 @@ router.get('/random', async (req, res) => {
     try {
         const { topic, count = 10, type } = req.query;
 
-        if (isDemo) {
-            let questions = [...demoStore.questions];
-            if (topic && topic !== 'all') questions = questions.filter(q => q.topic === topic);
-            if (type) questions = questions.filter(q => q.type === type);
-            const shuffled = questions.sort(() => 0.5 - Math.random());
-            return res.json({ questions: shuffled.slice(0, Number(count)) });
+        let sql = 'SELECT * FROM questions WHERE 1=1';
+        const args = [];
+
+        if (topic && topic !== 'all') {
+            sql += ' AND topic = ?';
+            args.push(topic);
+        }
+        if (type) {
+            sql += ' AND type = ?';
+            args.push(type);
         }
 
-        let query = supabaseAdmin.from('questions').select('*');
-        if (topic && topic !== 'all') query = query.eq('topic', topic);
-        if (type) query = query.eq('type', type);
-        const { data, error } = await query;
-        if (error) throw error;
-        const shuffled = data.sort(() => 0.5 - Math.random());
-        res.json({ questions: shuffled.slice(0, Number(count)) });
+        sql += ' ORDER BY RANDOM() LIMIT ?';
+        args.push(Number(count));
+
+        const result = await db.execute({ sql, args });
+        const questions = result.rows.map(formatQuestion);
+
+        res.json({ questions });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -60,15 +83,18 @@ router.get('/random', async (req, res) => {
 // GET /api/questions/:id
 router.get('/:id', async (req, res) => {
     try {
-        if (isDemo) {
-            const q = demoStore.questions.find(q => q.id === req.params.id);
-            return q ? res.json(q) : res.status(404).json({ error: 'Frage nicht gefunden' });
+        const result = await db.execute({
+            sql: 'SELECT * FROM questions WHERE id = ?',
+            args: [req.params.id]
+        });
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Frage nicht gefunden' });
         }
-        const { data, error } = await supabaseAdmin.from('questions').select('*').eq('id', req.params.id).single();
-        if (error) throw error;
-        res.json(data);
+
+        res.json(formatQuestion(result.rows[0]));
     } catch (err) {
-        res.status(404).json({ error: 'Frage nicht gefunden' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -76,18 +102,19 @@ router.get('/:id', async (req, res) => {
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
     try {
         const { text, type, options, correct_answer, explanation, topic, subtopic, difficulty } = req.body;
+        const id = `q-${Date.now()}`;
 
-        if (isDemo) {
-            const newQ = { id: `q-${Date.now()}`, text, type, options, correct_answer, explanation, topic, subtopic, difficulty, created_at: new Date().toISOString() };
-            demoStore.questions.unshift(newQ);
-            return res.status(201).json(newQ);
-        }
+        await db.execute({
+            sql: `INSERT INTO questions (id, text, type, options, correct_answer, explanation, topic, subtopic, difficulty) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            args: [
+                id, text, type || 'mcq', JSON.stringify(options || []),
+                correct_answer, explanation, topic, subtopic, difficulty || 'mittel'
+            ]
+        });
 
-        const { data, error } = await supabaseAdmin.from('questions').insert({
-            text, type, options, correct_answer, explanation, topic, subtopic, difficulty
-        }).select().single();
-        if (error) throw error;
-        res.status(201).json(data);
+        const result = await db.execute({ sql: 'SELECT * FROM questions WHERE id = ?', args: [id] });
+        res.status(201).json(formatQuestion(result.rows[0]));
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -98,18 +125,21 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     try {
         const { text, type, options, correct_answer, explanation, topic, subtopic, difficulty } = req.body;
 
-        if (isDemo) {
-            const idx = demoStore.questions.findIndex(q => q.id === req.params.id);
-            if (idx === -1) return res.status(404).json({ error: 'Frage nicht gefunden' });
-            demoStore.questions[idx] = { ...demoStore.questions[idx], text, type, options, correct_answer, explanation, topic, subtopic, difficulty };
-            return res.json(demoStore.questions[idx]);
-        }
+        await db.execute({
+            sql: `UPDATE questions SET 
+                  text = ?, type = ?, options = ?, correct_answer = ?, 
+                  explanation = ?, topic = ?, subtopic = ?, difficulty = ?
+                  WHERE id = ?`,
+            args: [
+                text, type, JSON.stringify(options), correct_answer,
+                explanation, topic, subtopic, difficulty, req.params.id
+            ]
+        });
 
-        const { data, error } = await supabaseAdmin.from('questions').update({
-            text, type, options, correct_answer, explanation, topic, subtopic, difficulty
-        }).eq('id', req.params.id).select().single();
-        if (error) throw error;
-        res.json(data);
+        const result = await db.execute({ sql: 'SELECT * FROM questions WHERE id = ?', args: [req.params.id] });
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Frage nicht gefunden' });
+
+        res.json(formatQuestion(result.rows[0]));
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -118,12 +148,10 @@ router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
 // DELETE /api/questions/:id - admin only
 router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
     try {
-        if (isDemo) {
-            demoStore.questions = demoStore.questions.filter(q => q.id !== req.params.id);
-            return res.json({ success: true });
-        }
-        const { error } = await supabaseAdmin.from('questions').delete().eq('id', req.params.id);
-        if (error) throw error;
+        await db.execute({
+            sql: 'DELETE FROM questions WHERE id = ?',
+            args: [req.params.id]
+        });
         res.json({ success: true });
     } catch (err) {
         res.status(400).json({ error: err.message });

@@ -1,56 +1,72 @@
 import { Router } from 'express';
-import { supabaseAdmin, isDemo, demoStore } from '../server.js';
+import { db } from '../server.js';
 import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
+
+// Helper to format session
+function formatSession(s) {
+    if (!s) return null;
+    return {
+        ...s,
+        questions: typeof s.questions === 'string' ? JSON.parse(s.questions) : s.questions,
+        answers: typeof s.answers === 'string' ? JSON.parse(s.answers) : s.answers,
+        completed: Boolean(s.completed)
+    };
+}
 
 // POST /api/sessions - create new quiz/exam session
 router.post('/', authMiddleware, async (req, res) => {
     try {
         const { type, topic, question_count = 10, duration } = req.body;
+        const userId = req.user?.id || req.userId;
 
-        if (isDemo) {
-            let questions = [...demoStore.questions];
-            if (topic && topic !== 'all') questions = questions.filter(q => q.topic === topic);
-            const shuffled = questions.sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, Number(question_count));
+        // 1. Get random questions from Turso
+        let qSql = 'SELECT * FROM questions WHERE 1=1';
+        const qArgs = [];
 
-            const session = {
-                id: `s-${Date.now()}`,
-                user_id: req.userId,
-                type: type || 'quiz',
-                questions: selected.map(q => q.id),
-                answers: [],
-                score: null,
-                duration: duration || null,
-                completed: false,
-                created_at: new Date().toISOString(),
-            };
-            demoStore.sessions.push(session);
-            return res.status(201).json({ session, questions: selected });
+        if (topic && topic !== 'all') {
+            qSql += ' AND topic = ?';
+            qArgs.push(topic);
         }
 
-        // Supabase mode
-        let query = supabaseAdmin.from('questions').select('*');
-        if (topic && topic !== 'all') query = query.eq('topic', topic);
-        const { data: allQuestions, error: qErr } = await query;
-        if (qErr) throw qErr;
+        qSql += ' ORDER BY RANDOM() LIMIT ?';
+        qArgs.push(Number(question_count));
 
-        const shuffled = allQuestions.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, Number(question_count));
+        const qResult = await db.execute({ sql: qSql, args: qArgs });
+        const selectedQuestions = qResult.rows.map(q => ({
+            ...q,
+            options: typeof q.options === 'string' ? JSON.parse(q.options) : q.options
+        }));
 
-        const { data, error } = await supabaseAdmin.from('sessions').insert({
-            user_id: req.user.id,
+        // 2. Create session in Turso
+        const sessionId = `s-${Date.now()}`;
+        const sessionData = {
+            id: sessionId,
+            user_id: userId,
             type: type || 'quiz',
-            questions: selected.map(q => q.id),
-            answers: [],
+            questions: JSON.stringify(selectedQuestions.map(q => q.id)),
+            answers: JSON.stringify([]),
             score: null,
             duration: duration || null,
-            completed: false,
-        }).select().single();
+            completed: 0,
+            created_at: new Date().toISOString()
+        };
 
-        if (error) throw error;
-        res.status(201).json({ session: data, questions: selected });
+        await db.execute({
+            sql: `INSERT INTO sessions (id, user_id, type, questions, answers, score, duration, completed, created_at) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            args: [
+                sessionData.id, sessionData.user_id, sessionData.type,
+                sessionData.questions, sessionData.answers, sessionData.score,
+                sessionData.duration, sessionData.completed, sessionData.created_at
+            ]
+        });
+
+        res.status(201).json({
+            session: formatSession(sessionData),
+            questions: selectedQuestions
+        });
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -60,64 +76,69 @@ router.post('/', authMiddleware, async (req, res) => {
 router.put('/:id', authMiddleware, async (req, res) => {
     try {
         const { answers, duration } = req.body;
+        const userId = req.user?.id || req.userId;
 
-        if (isDemo) {
-            const session = demoStore.sessions.find(s => s.id === req.params.id);
-            if (!session) return res.status(404).json({ error: 'Sitzung nicht gefunden' });
+        // 1. Get session from Turso
+        const sResult = await db.execute({
+            sql: 'SELECT * FROM sessions WHERE id = ?',
+            args: [req.params.id]
+        });
 
-            let correct = 0;
-            const graded = answers.map(a => {
-                const q = demoStore.questions.find(q => q.id === a.question_id);
-                const isCorrect = q && q.correct_answer === a.answer;
-                if (isCorrect) correct++;
-                return { ...a, correct: isCorrect, explanation: q?.explanation || '' };
-            });
-
-            const total = session.questions.length;
-            const percentage = total > 0 ? (correct / total) * 100 : 0;
-            const grade = Math.round((1 + (percentage / 100) * 5) * 10) / 10;
-
-            session.answers = graded;
-            session.score = percentage;
-            session.grade = grade;
-            session.duration = duration || null;
-            session.completed = true;
-            session.completed_at = new Date().toISOString();
-
-            return res.json({
-                session,
-                results: { correct, total, percentage, grade, passed: grade >= 4.0, answers: graded }
-            });
+        if (sResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Sitzung nicht gefunden' });
         }
 
-        // Supabase mode
-        const { data: session, error: sErr } = await supabaseAdmin
-            .from('sessions').select('*').eq('id', req.params.id).single();
-        if (sErr) throw sErr;
+        const session = formatSession(sResult.rows[0]);
 
-        const { data: questions } = await supabaseAdmin
-            .from('questions').select('*').in('id', session.questions);
+        // 2. Get questions to grade
+        const qIds = session.questions;
+        const qResult = await db.execute({
+            sql: `SELECT * FROM questions WHERE id IN (${qIds.map(() => '?').join(',')})`,
+            args: qIds
+        });
+        const questions = qResult.rows;
 
+        // 3. Grade answers
         let correct = 0;
         const graded = answers.map(a => {
             const q = questions.find(q => q.id === a.question_id);
             const isCorrect = q && q.correct_answer === a.answer;
             if (isCorrect) correct++;
-            return { ...a, correct: isCorrect, explanation: q?.explanation || '' };
+            return {
+                ...a,
+                correct: isCorrect,
+                explanation: q?.explanation || ''
+            };
         });
 
         const total = session.questions.length;
         const percentage = total > 0 ? (correct / total) * 100 : 0;
         const grade = Math.round((1 + (percentage / 100) * 5) * 10) / 10;
 
-        const { data, error } = await supabaseAdmin.from('sessions').update({
-            answers: graded, score: percentage, grade, duration: duration || null,
-            completed: true, completed_at: new Date().toISOString(),
-        }).eq('id', req.params.id).select().single();
+        // 4. Update session in Turso
+        await db.execute({
+            sql: `UPDATE sessions SET 
+                  answers = ?, score = ?, grade = ?, duration = ?, 
+                  completed = 1, completed_at = ?
+                  WHERE id = ?`,
+            args: [
+                JSON.stringify(graded), percentage, grade, duration || null,
+                new Date().toISOString(), req.params.id
+            ]
+        });
 
-        if (error) throw error;
-        await updateStreak(req.user.id);
-        res.json({ session: data, results: { correct, total, percentage, grade, passed: grade >= 4.0, answers: graded } });
+        // 5. Update streak
+        await updateStreak(userId);
+
+        const updatedResult = await db.execute({
+            sql: 'SELECT * FROM sessions WHERE id = ?',
+            args: [req.params.id]
+        });
+
+        res.json({
+            session: formatSession(updatedResult.rows[0]),
+            results: { correct, total, percentage, grade, passed: grade >= 4.0, answers: graded }
+        });
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -126,38 +147,44 @@ router.put('/:id', authMiddleware, async (req, res) => {
 // GET /api/sessions - user's sessions
 router.get('/', authMiddleware, async (req, res) => {
     try {
-        if (isDemo) {
-            const sessions = demoStore.sessions.filter(s => s.user_id === req.userId);
-            return res.json({ sessions });
-        }
+        const userId = req.user?.id || req.userId;
+        const result = await db.execute({
+            sql: 'SELECT * FROM sessions WHERE user_id = ? ORDER BY created_at DESC LIMIT 50',
+            args: [userId]
+        });
 
-        const { data, error } = await supabaseAdmin
-            .from('sessions').select('*')
-            .eq('user_id', req.user.id)
-            .order('created_at', { ascending: false })
-            .limit(50);
-        if (error) throw error;
-        res.json({ sessions: data });
+        res.json({ sessions: result.rows.map(formatSession) });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
 async function updateStreak(userId) {
-    if (isDemo) return;
-    const { data: profile } = await supabaseAdmin
-        .from('profiles').select('streak, last_active').eq('id', userId).single();
-    if (!profile) return;
-    const today = new Date().toISOString().split('T')[0];
-    const lastActive = profile.last_active ? new Date(profile.last_active).toISOString().split('T')[0] : null;
-    let newStreak = profile.streak || 0;
-    if (lastActive !== today) {
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-        newStreak = lastActive === yesterday ? newStreak + 1 : 1;
+    try {
+        const result = await db.execute({
+            sql: 'SELECT streak, last_active FROM profiles WHERE id = ?',
+            args: [userId]
+        });
+
+        if (result.rows.length === 0) return;
+        const profile = result.rows[0];
+
+        const today = new Date().toISOString().split('T')[0];
+        const lastActive = profile.last_active ? new Date(profile.last_active).toISOString().split('T')[0] : null;
+
+        let newStreak = profile.streak || 0;
+        if (lastActive !== today) {
+            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+            newStreak = lastActive === yesterday ? newStreak + 1 : 1;
+        }
+
+        await db.execute({
+            sql: 'UPDATE profiles SET streak = ?, last_active = ? WHERE id = ?',
+            args: [newStreak, new Date().toISOString(), userId]
+        });
+    } catch (err) {
+        console.error('Streak Update Fehler:', err.message);
     }
-    await supabaseAdmin.from('profiles').update({
-        streak: newStreak, last_active: new Date().toISOString(),
-    }).eq('id', userId);
 }
 
 export default router;

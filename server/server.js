@@ -11,44 +11,29 @@ import progressRouter from './routes/progress.js';
 import paymentRouter from './routes/payment.js';
 import usersRouter from './routes/users.js';
 
+import { createClient as createTursoClient } from '@libsql/client';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Check if Supabase is configured
-const isSupabaseConfigured = process.env.SUPABASE_URL &&
-    process.env.SUPABASE_URL !== 'https://placeholder.supabase.co' &&
-    process.env.SUPABASE_SERVICE_KEY &&
-    process.env.SUPABASE_SERVICE_KEY !== 'placeholder-key';
+// Database Configuration
+export const db = createTursoClient({
+    url: process.env.TURSO_DATABASE_URL,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+});
 
-// Supabase admin client (service role) – only if configured
+console.log('🔗 Turso Database verbunden');
+
+// Supabase (legacy support if needed, but we'll prefer Turso)
+const isSupabaseConfigured = process.env.SUPABASE_URL &&
+    process.env.SUPABASE_URL !== 'https://placeholder.supabase.co';
+
 export const supabaseAdmin = isSupabaseConfigured
-    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
+    ? createSupabaseClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
     : null;
 
-// In-memory store for demo mode
-export const demoStore = {
-    questions: [],
-    sessions: [],
-    profiles: [
-        { id: 'demo-user-001', name: 'Michael Uetz', email: 'michael@uetz.com', role: 'admin', is_premium: true, streak: 5, last_active: new Date().toISOString() },
-        { id: 'demo-user-002', name: 'Anna Müller', email: 'anna@example.ch', role: 'user', is_premium: false, streak: 12, last_active: new Date().toISOString() },
-    ],
-    flashcard_decks: [],
-};
-
-// Load questions from JSON for demo mode
-if (!isSupabaseConfigured) {
-    try {
-        const raw = readFileSync(join(__dirname, 'data', 'questions.json'), 'utf-8');
-        demoStore.questions = JSON.parse(raw).map((q, i) => ({ ...q, id: `q-${i + 1}` }));
-        console.log(`📦 Demo-Modus: ${demoStore.questions.length} Fragen aus JSON geladen`);
-    } catch (e) {
-        console.error('Fehler beim Laden der Fragen:', e.message);
-    }
-}
-
-export const isDemo = !isSupabaseConfigured;
+export const isDemo = false; // We are now in persistent DB mode with Turso
 
 app.use(cors());
 app.use(express.json());

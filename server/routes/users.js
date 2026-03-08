@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authMiddleware, adminMiddleware } from '../middleware/auth.js';
-import { supabaseAdmin, isDemo, demoStore } from '../server.js';
+import { db } from '../server.js';
 
 const router = Router();
 
@@ -10,17 +10,17 @@ router.use(authMiddleware, adminMiddleware);
 // GET /api/users — list all users/profiles
 router.get('/', async (req, res) => {
     try {
-        if (isDemo) {
-            return res.json({ users: demoStore.profiles });
-        }
+        const result = await db.execute({
+            sql: 'SELECT * FROM profiles ORDER BY created_at DESC',
+            args: []
+        });
 
-        const { data, error } = await supabaseAdmin
-            .from('profiles')
-            .select('*')
-            .order('created_at', { ascending: false });
+        const users = result.rows.map(user => ({
+            ...user,
+            is_premium: Boolean(user.is_premium)
+        }));
 
-        if (error) throw error;
-        res.json({ users: data || [] });
+        res.json({ users: users || [] });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -32,27 +32,41 @@ router.put('/:id', async (req, res) => {
     const { role, is_premium } = req.body;
 
     try {
-        if (isDemo) {
-            const user = demoStore.profiles.find(p => p.id === id);
-            if (!user) return res.status(404).json({ error: 'Benutzer nicht gefunden' });
-            if (role !== undefined) user.role = role;
-            if (is_premium !== undefined) user.is_premium = is_premium;
-            return res.json({ user });
+        const updates = [];
+        const args = [];
+
+        if (role !== undefined) {
+            updates.push('role = ?');
+            args.push(role);
+        }
+        if (is_premium !== undefined) {
+            updates.push('is_premium = ?');
+            args.push(is_premium ? 1 : 0);
         }
 
-        const updates = {};
-        if (role !== undefined) updates.role = role;
-        if (is_premium !== undefined) updates.is_premium = is_premium;
+        if (updates.length > 0) {
+            args.push(id);
+            await db.execute({
+                sql: `UPDATE profiles SET ${updates.join(', ')} WHERE id = ?`,
+                args
+            });
+        }
 
-        const { data, error } = await supabaseAdmin
-            .from('profiles')
-            .update(updates)
-            .eq('id', id)
-            .select()
-            .single();
+        const result = await db.execute({
+            sql: 'SELECT * FROM profiles WHERE id = ?',
+            args: [id]
+        });
 
-        if (error) throw error;
-        res.json({ user: data });
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Benutzer nicht gefunden' });
+        }
+
+        const user = {
+            ...result.rows[0],
+            is_premium: Boolean(result.rows[0].is_premium)
+        };
+
+        res.json({ user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
