@@ -30,7 +30,7 @@ const isSupabaseConfigured = process.env.SUPABASE_URL &&
     process.env.SUPABASE_URL !== 'https://placeholder.supabase.co';
 
 export const supabaseAdmin = isSupabaseConfigured
-    ? createSupabaseClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
+    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
     : null;
 
 export const isDemo = false; // We are now in persistent DB mode with Turso
