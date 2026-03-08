@@ -12,6 +12,6 @@
         "stripe": "^17.3.0"
     },
     "scripts": {
-        "build": "cd client && npm install && npm run build && mv dist ../dist"
+        "build": "cd client && npm install && npm run build && cd .. && rm -rf public && mv client/dist public"
     }
 }
