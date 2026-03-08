@@ -3,16 +3,22 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "server/server.js"
+            "destination": "/server/server.js"
         },
         {
             "source": "/(.*)",
-            "destination": "client/index.html"
+            "destination": "/client/dist/$1",
+            "checkInternalReactions": false
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/client/dist/index.html"
         }
     ],
     "functions": {
         "server/server.js": {
-            "runtime": "vercel-node@latest"
+            "runtime": "vercel-node@latest",
+            "includeFiles": "server/**"
         }
     }
 }
