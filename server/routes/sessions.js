@@ -34,10 +34,22 @@ router.post('/', authMiddleware, async (req, res) => {
         qArgs.push(Number(question_count));
 
         const qResult = await db.execute({ sql: qSql, args: qArgs });
-        const selectedQuestions = qResult.rows.map(q => ({
-            ...q,
-            options: typeof q.options === 'string' ? JSON.parse(q.options) : q.options
-        }));
+        const selectedQuestions = qResult.rows.map(q => {
+            const parsedOptions = typeof q.options === 'string' ? JSON.parse(q.options) : q.options;
+
+            // Shuffle options to prevent correct answer always being first
+            if (Array.isArray(parsedOptions)) {
+                for (let i = parsedOptions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [parsedOptions[i], parsedOptions[j]] = [parsedOptions[j], parsedOptions[i]];
+                }
+            }
+
+            return {
+                ...q,
+                options: parsedOptions
+            };
+        });
 
         // 2. Create session in Turso
         const sessionId = `s-${Date.now()}`;

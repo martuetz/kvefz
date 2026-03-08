@@ -7,6 +7,10 @@ export default function AdminUsersPage() {
     const [search, setSearch] = useState('');
     const [updating, setUpdating] = useState(null);
 
+    const [creating, setCreating] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [newUser, setNewUser] = useState({ name: '', email: '', password: '', role: 'user', is_premium: false });
+
     useEffect(() => { loadUsers(); }, []);
 
     async function loadUsers() {
@@ -44,6 +48,34 @@ export default function AdminUsersPage() {
         setUpdating(null);
     }
 
+    async function handleCreateUser(e) {
+        e.preventDefault();
+        setSubmitting(true);
+        try {
+            const data = await api.createUser(newUser);
+            setUsers([{ ...data.user, id: data.user.id }, ...users]);
+            setCreating(false);
+            setNewUser({ name: '', email: '', password: '', role: 'user', is_premium: false });
+        } catch (err) {
+            alert('Fehler: ' + err.message);
+        }
+        setSubmitting(false);
+    }
+
+    async function handleDeleteUser(user) {
+        if (!window.confirm(`Möchtest du den Benutzer "${user.name || user.email}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`)) {
+            return;
+        }
+        setUpdating(user.id);
+        try {
+            await api.deleteUser(user.id);
+            setUsers(prev => prev.filter(u => u.id !== user.id));
+        } catch (err) {
+            alert('Fehler beim Löschen: ' + err.message);
+        }
+        setUpdating(null);
+    }
+
     const filtered = users.filter(u =>
         !search || u.name?.toLowerCase().includes(search.toLowerCase()) ||
         u.email?.toLowerCase().includes(search.toLowerCase())
@@ -52,10 +84,58 @@ export default function AdminUsersPage() {
     return (
         <div className="page">
             <div className="container">
-                <div className="page-header animate-fade-in">
-                    <h1>👥 Benutzer verwalten</h1>
-                    <p>{users.length} registrierte Benutzer</p>
+                <div className="page-header animate-fade-in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                        <h1>👥 Benutzer verwalten</h1>
+                        <p>{users.length} registrierte Benutzer</p>
+                    </div>
+                    <button className="btn btn-primary" onClick={() => setCreating(true)}>
+                        + NEUER BENUTZER
+                    </button>
                 </div>
+
+                {creating && (
+                    <div className="card" style={{ marginBottom: 'var(--space-5)', borderLeft: '4px solid var(--color-primary)' }}>
+                        <h2 style={{ fontSize: '1.2rem', marginBottom: 'var(--space-3)' }}>Neuen Benutzer anlegen</h2>
+                        <form onSubmit={handleCreateUser} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                            <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
+                                <div style={{ flex: '1 1 200px' }}>
+                                    <label className="label">Name</label>
+                                    <input className="input" required value={newUser.name} onChange={e => setNewUser({ ...newUser, name: e.target.value })} />
+                                </div>
+                                <div style={{ flex: '1 1 200px' }}>
+                                    <label className="label">E-Mail</label>
+                                    <input type="email" className="input" required value={newUser.email} onChange={e => setNewUser({ ...newUser, email: e.target.value })} />
+                                </div>
+                                <div style={{ flex: '1 1 200px' }}>
+                                    <label className="label">Passwort</label>
+                                    <input type="password" className="input" required value={newUser.password} onChange={e => setNewUser({ ...newUser, password: e.target.value })} minLength={6} placeholder="Mind. 6 Zeichen" />
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
+                                <div>
+                                    <label className="label">Rolle</label>
+                                    <select className="input" value={newUser.role} onChange={e => setNewUser({ ...newUser, role: e.target.value })} style={{ width: 'auto' }}>
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <label style={{ display: 'flex', gap: '8px', alignItems: 'center', cursor: 'pointer', marginTop: '1.5rem' }}>
+                                    <input type="checkbox" checked={newUser.is_premium} onChange={e => setNewUser({ ...newUser, is_premium: e.target.checked })} />
+                                    <span>Premium Zugang</span>
+                                </label>
+                            </div>
+                            <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: 'var(--space-2)' }}>
+                                <button type="submit" className="btn btn-primary" disabled={submitting}>
+                                    {submitting ? 'Wird erstellt...' : 'Speichern'}
+                                </button>
+                                <button type="button" className="btn btn-outline" onClick={() => setCreating(false)}>
+                                    Abbrechen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                )}
 
                 {/* Search */}
                 <div className="card" style={{
@@ -141,6 +221,15 @@ export default function AdminUsersPage() {
                                                     disabled={updating === user.id}
                                                 >
                                                     {user.is_premium ? '✕ Free' : '⭐ Premium'}
+                                                </button>
+                                                <button
+                                                    className="btn btn-outline"
+                                                    style={{ fontSize: 'var(--font-size-xs)', padding: '6px 14px', borderColor: 'var(--color-danger)', color: 'var(--color-danger)' }}
+                                                    onClick={() => handleDeleteUser(user)}
+                                                    disabled={updating === user.id}
+                                                    title="Benutzer löschen"
+                                                >
+                                                    🗑️
                                                 </button>
                                             </div>
                                         </td>
