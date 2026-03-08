@@ -26,7 +26,8 @@ export default function Navbar() {
                             <li><Link to="/topics" className={isActive('/topics')}>Themen</Link></li>
                             <li><Link to="/progress" className={isActive('/progress')}>Fortschritt</Link></li>
                             <li><Link to="/tips" className={isActive('/tips')}>Tipps</Link></li>
-                            {isAdmin && <li><Link to="/admin" className={isActive('/admin')}>Admin</Link></li>}
+                            {isAdmin && <li><Link to="/admin/questions" className={isActive('/admin/questions')}>Fragen</Link></li>}
+                            {isAdmin && <li><Link to="/admin/users" className={isActive('/admin/users')}>User</Link></li>}
                             <li>
                                 <button className="btn btn-outline" onClick={signOut} style={{ fontSize: '0.8rem' }}>
                                     Abmelden

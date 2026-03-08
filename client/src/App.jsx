@@ -14,7 +14,8 @@ const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const TopicsPage = lazy(() => import('./pages/TopicsPage'));
 const ProgressPage = lazy(() => import('./pages/ProgressPage'));
 const TipsPage = lazy(() => import('./pages/TipsPage'));
-const AdminPage = lazy(() => import('./pages/AdminPage'));
+const AdminQuestionsPage = lazy(() => import('./pages/AdminQuestionsPage'));
+const AdminUsersPage = lazy(() => import('./pages/AdminUsersPage'));
 const PremiumPage = lazy(() => import('./pages/PremiumPage'));
 
 function ProtectedRoute({ children }) {
@@ -46,7 +47,9 @@ export default function App() {
                     <Route path="/progress" element={<ProtectedRoute><ProgressPage /></ProtectedRoute>} />
                     <Route path="/tips" element={<ProtectedRoute><TipsPage /></ProtectedRoute>} />
                     <Route path="/premium" element={<ProtectedRoute><PremiumPage /></ProtectedRoute>} />
-                    <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+                    <Route path="/admin/questions" element={<AdminRoute><AdminQuestionsPage /></AdminRoute>} />
+                    <Route path="/admin/users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
+                    <Route path="/admin" element={<Navigate to="/admin/questions" />} />
                     <Route path="/" element={<Navigate to="/dashboard" />} />
                 </Routes>
             </Suspense>

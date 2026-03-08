@@ -9,6 +9,7 @@ import questionsRouter from './routes/questions.js';
 import sessionsRouter from './routes/sessions.js';
 import progressRouter from './routes/progress.js';
 import paymentRouter from './routes/payment.js';
+import usersRouter from './routes/users.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -30,7 +31,8 @@ export const demoStore = {
     questions: [],
     sessions: [],
     profiles: [
-        { id: 'demo-user-001', name: 'Michael Uetz', email: 'michael@uetz.com', role: 'admin', is_premium: true, streak: 5, last_active: new Date().toISOString() }
+        { id: 'demo-user-001', name: 'Michael Uetz', email: 'michael@uetz.com', role: 'admin', is_premium: true, streak: 5, last_active: new Date().toISOString() },
+        { id: 'demo-user-002', name: 'Anna Müller', email: 'anna@example.ch', role: 'user', is_premium: false, streak: 12, last_active: new Date().toISOString() },
     ],
     flashcard_decks: [],
 };
@@ -61,6 +63,7 @@ app.use('/api/questions', questionsRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/progress', progressRouter);
 app.use('/api/payment', paymentRouter);
+app.use('/api/users', usersRouter);
 
 app.listen(PORT, () => {
     console.log(`✅ EFZ Server läuft auf Port ${PORT}`);

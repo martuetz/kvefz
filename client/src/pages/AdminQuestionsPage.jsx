@@ -74,7 +74,7 @@ export default function AdminPage() {
         <div className="page">
             <div className="container">
                 <div className="page-header animate-fade-in">
-                    <h1>⚙️ Admin Panel</h1>
+                    <h1>📝 Fragen verwalten</h1>
                     <p>Fragen verwalten • {total} Fragen im System</p>
                 </div>
 

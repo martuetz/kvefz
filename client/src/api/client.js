@@ -35,4 +35,8 @@ export const api = {
 
     // Payment
     createCheckout: () => request('/payment/checkout', { method: 'POST' }),
+
+    // Users (admin)
+    getUsers: () => request('/users'),
+    updateUser: (id, data) => request(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
 };
