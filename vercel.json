@@ -3,7 +3,7 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/server/server.js"
+            "destination": "/api/index.js"
         },
         {
             "source": "/(.*)",
@@ -13,11 +13,5 @@
             "source": "/(.*)",
             "destination": "/client/dist/index.html"
         }
-    ],
-    "functions": {
-        "server/server.js": {
-            "runtime": "nodejs20.x",
-            "includeFiles": "server/**"
-        }
-    }
+    ]
 }
