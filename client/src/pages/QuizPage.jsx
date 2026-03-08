@@ -170,24 +170,30 @@ export default function QuizPage() {
                                     fontSize: 'var(--font-size-base)',
                                     textAlign: 'left',
                                     background: 'var(--bg-input)',
+                                    color: 'var(--text-primary)',
+                                    lineHeight: 1.5,
                                 };
 
                                 if (showExplanation) {
                                     if (opt === q.correct_answer) {
-                                        style.borderColor = 'var(--color-success)';
-                                        style.background = 'rgba(42,157,143,0.1)';
+                                        style.borderColor = '#2a9d8f';
+                                        style.background = 'rgba(42,157,143,0.2)';
+                                        style.color = '#5ee6d5';
                                     } else if (opt === selectedAnswer && !isCorrect) {
-                                        style.borderColor = 'var(--color-danger)';
-                                        style.background = 'rgba(231,111,81,0.1)';
+                                        style.borderColor = '#e76f51';
+                                        style.background = 'rgba(231,111,81,0.2)';
+                                        style.color = '#ff9a85';
+                                    } else {
+                                        style.opacity = 0.5;
                                     }
                                 } else if (selectedAnswer === opt) {
                                     style.borderColor = 'var(--color-secondary)';
-                                    style.background = 'rgba(69,123,157,0.1)';
+                                    style.background = 'rgba(69,123,157,0.15)';
                                 }
 
                                 return (
                                     <button key={i} style={style} onClick={() => selectAnswer(opt)} disabled={showExplanation}>
-                                        <strong style={{ marginRight: 'var(--space-2)' }}>{String.fromCharCode(65 + i)})</strong>
+                                        <strong style={{ marginRight: 'var(--space-2)', color: 'inherit' }}>{String.fromCharCode(65 + i)})</strong>
                                         {opt}
                                     </button>
                                 );

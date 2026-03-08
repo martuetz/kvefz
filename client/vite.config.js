@@ -9,11 +9,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
-        name: 'EFZ-Prüfungsvorbereitung',
-        short_name: 'EFZ-Prep',
+        name: 'KV EFZ – Prüfungsvorbereitung',
+        short_name: 'KV EFZ',
         description: 'Prüfungsvorbereitung für Kaufleute EFZ – Qualifikationsverfahren',
-        theme_color: '#1a1a2e',
-        background_color: '#1a1a2e',
+        theme_color: '#EDEBE1',
+        background_color: '#EDEBE1',
         display: 'standalone',
         start_url: '/',
         icons: [

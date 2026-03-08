@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 
 export default function Navbar() {
     const { user, signOut, isAdmin } = useAuth();
-    const { theme, toggleTheme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
 
@@ -15,7 +13,7 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="container">
                 <Link to="/dashboard" className="nav-brand">
-                    📚 <span>EFZ</span>-Prep
+                    📚 <span>KV</span> EFZ
                 </Link>
 
                 {user && (
@@ -30,11 +28,6 @@ export default function Navbar() {
                             <li><Link to="/tips" className={isActive('/tips')}>Tipps</Link></li>
                             {isAdmin && <li><Link to="/admin" className={isActive('/admin')}>Admin</Link></li>}
                             <li>
-                                <button className="btn btn-secondary btn-icon" onClick={toggleTheme} title="Design wechseln">
-                                    {theme === 'dark' ? '☀️' : '🌙'}
-                                </button>
-                            </li>
-                            <li>
                                 <button className="btn btn-outline" onClick={signOut} style={{ fontSize: '0.8rem' }}>
                                     Abmelden
                                 </button>
@@ -48,12 +41,7 @@ export default function Navbar() {
                 )}
 
                 {!user && (
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                        <button className="btn btn-secondary btn-icon" onClick={toggleTheme} title="Design wechseln">
-                            {theme === 'dark' ? '☀️' : '🌙'}
-                        </button>
-                        <Link to="/login" className="btn btn-primary">Anmelden</Link>
-                    </div>
+                    <Link to="/login" className="btn btn-primary">Anmelden</Link>
                 )}
             </div>
         </nav>
