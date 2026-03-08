@@ -50,10 +50,15 @@ app.use('/api/progress', progressRouter);
 app.use('/api/payment', paymentRouter);
 app.use('/api/users', usersRouter);
 
-app.listen(PORT, () => {
-    console.log(`✅ EFZ Server läuft auf Port ${PORT}`);
-    if (isDemo) {
-        console.log(`🎮 Demo-Modus aktiv (kein Supabase konfiguriert)`);
-        console.log(`   Login: michael@uetz.com / admin`);
-    }
-});
+// Export the app for Vercel serverless functions
+export default app;
+
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`✅ EFZ Server läuft auf Port ${PORT}`);
+        if (isDemo) {
+            console.log(`🎮 Demo-Modus aktiv (kein Supabase konfiguriert)`);
+            console.log(`   Login: michael@uetz.com / admin`);
+        }
+    });
+}
